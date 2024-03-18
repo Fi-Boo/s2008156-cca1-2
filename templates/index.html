@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> s2008156 Cloud Computing A1 2024 SP1 </title>
+    <title> s2008156 Cloud Computing A1 2024 SP1 Task 2 </title>
         <script src="{{ url_for('static', filename='script.js') }}"></script>
         <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
@@ -12,27 +12,23 @@
             <h1> The Forum! </h1>
         </header>
         <div class="content">
-            <div class="outerBox">
-                <h2>User Login</h2>
-                <div id="loginBox">
-                    <form class="loginForm" enctype="multipart/form-data" method="POST">
-                        <br>
-                        <p> {{ error_message }} </p>
-                        <label for="loginid">ID: </label>
-                        <input type="text" id="loginid" name="loginid" required>
-                        <label for="loginpw">Password: </label>
-                        <input type="password" id="loginpw" name="loginpw" required>
-                        <br>
-                        <div>
-                            <input type="submit" value="Login">
-                        </div>
-                    </form>
-                    <form class="loginRego" action="{{ url_for('registration') }}">
-                        <br>
-                        <div>
-                            <input type="submit" value="Register"> 
-                        </div>
-                    </form>
+            <div class="task2_1">
+                <div class="taskDesc">
+                    <h2>Task 2.1</h2>
+                    <p>Show top 10 time slots (year and month) with the highest trade value (i.e. import value + export value).
+                </div>
+                <div id="list2_1">
+
+                    <br>
+                    <p> Year/Month</p>
+                    <p> Trade Value (Import + Export)</p>
+
+                    {% for result in results %}
+                        <p> {{loop.index}}</p>
+                        <p>{{ result['time_ref'] }}</p>
+                        <p>{{ result['total'] }}</p>
+
+                    {% endfor %}
                 </div>
             </div>
         </div>
