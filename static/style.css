@@ -36,18 +36,13 @@ footer p {
 }
 
 .content {
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-    justify-content: center;
-    margin: 5rem auto 0;
+    margin: auto;
     width: 60rem;
-
 }
 
 .taskDesc {
     width: 100%;
-    background-image: linear-gradient(#d4af37 80%, black);
+    background-image: linear-gradient(silver 80%, black);
     color: black;
     padding: 0;
     border-radius: 0.5rem 0.5rem 0 0;
@@ -58,19 +53,25 @@ footer p {
     margin: 0;
 }
 
+table {
+    width: 100%;
+}
+
 p {
     margin: 0;
     padding: 0.5rem;
 }
 
-.task2_1 {
-    border: 1px solid #d4af37;
-    border-radius: 0.5rem;
-    margin-top: 2rem;
+.task2_1, .task2_2 {
+    width: 35rem;
+    margin: 7rem auto 0;
 }
 
-#list2_1 {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    margin: auto;
+tr:first-child {
+    background-color: #d4af37;
+    color: black;
+}
+
+tr, td {
+    border: 1px solid #d4af37;
 }

@@ -17,19 +17,29 @@
                     <h2>Task 2.1</h2>
                     <p>Show top 10 time slots (year and month) with the highest trade value (i.e. import value + export value).
                 </div>
-                <div id="list2_1">
 
-                    <br>
-                    <p> Year/Month</p>
-                    <p> Trade Value (Import + Export)</p>
+                <table id="table2_1">
+                    <tr>
+                        <th>#</th>
+                        <th>Year/Month</th>
+                        <th>Trade Value (Import + Export)</th>
+                    </tr>
 
-                    {% for result in results %}
-                        <p> {{loop.index}}</p>
-                        <p>{{ result['time_ref'] }}</p>
-                        <p>{{ result['total'] }}</p>
-
-                    {% endfor %}
+                {% for result in results7_1 %}
+                    <tr>
+                        <td>{{loop.index}}</td>
+                        <td>{{ result['time_ref'] }}</td>
+                        <td>{{ result['total'] }}</td>
+                    </tr>
+                {% endfor %}
+                </table>
+            </div>
+            <div class="task2_2">
+                <div class="taskDesc">
+                    <h2>Task 2.2</h2>
+                    <p>Show top 40 countries with the highest total trade deficit value (i.e. import value - export value) of goods from 2013 to 2015 where status is “F”.
                 </div>
+
             </div>
         </div>
         <footer>
