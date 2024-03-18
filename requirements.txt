@@ -1,0 +1,6 @@
+Flask==3.0.2
+google.cloud.bigquery
+google.cloud
+google.cloud.datastore
+google.cloud.storage
+protobuf==3.20.*
