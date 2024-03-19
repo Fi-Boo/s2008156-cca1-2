@@ -38,14 +38,16 @@ footer p {
 .content {
     margin: auto;
     width: 60rem;
+    padding-bottom: 20rem;
 }
 
 .taskDesc {
     width: 100%;
-    background-image: linear-gradient(silver 80%, black);
+    background-image: linear-gradient(silver 70%, black);
     color: black;
     padding: 0;
     border-radius: 0.5rem 0.5rem 0 0;
+    border: 1px solid black;
 }
 
 .taskDesc h2 {
@@ -53,19 +55,26 @@ footer p {
     margin: 0;
 }
 
+.taskDesc p {
+    text-align: left;
+    margin: 0 2rem 2rem;
+}
+
 table {
     width: 100%;
 }
 
-p {
-    margin: 0;
-    padding: 0.5rem;
-}
 
-.task2_1, .task2_2 {
+
+.task2_1, .task2_2, .task2_3 {
     width: 35rem;
     margin: 7rem auto 0;
 }
+
+.task2_2 {
+    width: 50rem;
+}
+
 
 tr:first-child {
     background-color: #d4af37;

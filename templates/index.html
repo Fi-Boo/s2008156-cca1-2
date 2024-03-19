@@ -25,7 +25,7 @@
                         <th>Trade Value (Import + Export)</th>
                     </tr>
 
-                {% for result in results7_1 %}
+                {% for result in results2_1 %}
                     <tr>
                         <td>{{loop.index}}</td>
                         <td>{{ result['time_ref'] }}</td>
@@ -36,9 +36,53 @@
             </div>
             <div class="task2_2">
                 <div class="taskDesc">
-                    <h2>Task 2.2</h2>
+                    <h2>Task 2.3</h2>
                     <p>Show top 40 countries with the highest total trade deficit value (i.e. import value - export value) of goods from 2013 to 2015 where status is “F”.
                 </div>
+
+                <table id="table2_2">
+                    <tr>
+                        <th>#</th>
+                        <th>Country</th>
+                        <th>Product Type</th>
+                        <th>Trade Deficit</th>
+                        <th>Status</th>
+                    </tr>
+
+                {% for result in results2_2 %}
+                    <tr>
+                        <td>{{loop.index}}</td>
+                        <td>{{ result['country'] }}</td>
+                        <td>{{ result['product_type'] }}</td>
+                        <td>{{ result['trade_deficit'] }}</td>
+                        <td>{{ result['status'] }}</td>
+                    </tr>
+                {% endfor %}
+                </table>
+
+            </div>
+
+            <div class="task2_3">
+                <div class="taskDesc">
+                    <h2>Task 2.2</h2>
+                    <p>Show top 25 services with the highest total trade surplus value (i.e. export value - import value) in the top 10 time slots of Query Result 1 and the top 40 countries of Query Result 2.
+                </div>
+
+                <table id="table2_3">
+                    <tr>
+                        <th>#</th>
+                        <th>Service</th>
+                        <th>Trade Surplus</th>
+                    </tr>
+
+                {% for result in results2_3 %}
+                    <tr>
+                        <td>{{loop.index}}</td>
+                        <td>{{ result['service'] }}</td>
+                        <td>{{ result['trade_surplus'] }}</td>
+                    </tr>
+                {% endfor %}
+                </table>
 
             </div>
         </div>
