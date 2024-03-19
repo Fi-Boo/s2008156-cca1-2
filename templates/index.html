@@ -9,7 +9,7 @@
 </head>
     <body>
         <header>
-            <h1> The Forum! </h1>
+             <h1> The Forum! </h1> <button><a href="https://s2008156-cca1.ts.r.appspot.com/">TASK 1</a></button> <button><a href="https://s2008156-cca1-2.ts.r.appspot.com/">TASK 2</a></button>
         </header>
         <div class="content">
             <div class="task2_1">
@@ -36,7 +36,7 @@
             </div>
             <div class="task2_2">
                 <div class="taskDesc">
-                    <h2>Task 2.3</h2>
+                    <h2>Task 2.2</h2>
                     <p>Show top 40 countries with the highest total trade deficit value (i.e. import value - export value) of goods from 2013 to 2015 where status is “F”.
                 </div>
 
@@ -64,7 +64,7 @@
 
             <div class="task2_3">
                 <div class="taskDesc">
-                    <h2>Task 2.2</h2>
+                    <h2>Task 2.3</h2>
                     <p>Show top 25 services with the highest total trade surplus value (i.e. export value - import value) in the top 10 time slots of Query Result 1 and the top 40 countries of Query Result 2.
                 </div>
 
@@ -79,7 +79,7 @@
                     <tr>
                         <td>{{loop.index}}</td>
                         <td>{{ result['service'] }}</td>
-                        <td>{{ result['trade_surplus'] }}</td>
+                        <td>{{ result['surplus'] }}</td>
                     </tr>
                 {% endfor %}
                 </table>

@@ -71,7 +71,7 @@ table {
     margin: 7rem auto 0;
 }
 
-.task2_2 {
+.task2_2, .task2_3 {
     width: 50rem;
 }
 
@@ -83,4 +83,13 @@ tr:first-child {
 
 tr, td {
     border: 1px solid #d4af37;
+}
+
+a:link, a:visited {
+    text-decoration: none;
+}
+
+a:hover, a:active {
+    text-decoration: underline;
+    font-weight: bold;
 }
