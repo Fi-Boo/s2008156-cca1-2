@@ -70,7 +70,7 @@ def index():
         FROM (
         SELECT  code, SUM(value) AS export_total
         FROM (
-        SELECT base.time_ref AS time_ref, base.account AS account, base.code AS code, base.country_code AS country_code, base.product_type AS product_type, base.value AS value, base.status AS status
+        SELECT *
         FROM    `s2008156-cca1-2.country.gsquarterlySeptember20` AS base
         JOIN    (
                 SELECT time_ref, CAST(SUM(value) as int) as total
@@ -117,7 +117,7 @@ def index():
         JOIN (
         SELECT  code, SUM(value) AS import_total
         FROM (
-        SELECT base.time_ref AS time_ref, base.account AS account, base.code AS code, base.country_code AS country_code, base.product_type AS product_type, base.value AS value, base.status AS status
+        SELECT *
         FROM    `s2008156-cca1-2.country.gsquarterlySeptember20` AS base
         JOIN    (
                 SELECT time_ref, CAST(SUM(value) as int) as total
