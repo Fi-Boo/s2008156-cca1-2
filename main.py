@@ -54,6 +54,35 @@ def index():
         ORDER  BY trade_deficit DESC
         LIMIT  40;
     """
+    query2_1 ="""
+        SELECT countries.country_label AS country, extras.product_type AS product, extras.status AS status,
+                Sum(CASE
+                        WHEN time_ref BETWEEN 201301 AND 201512
+                                AND account = 'Exports' THEN value
+                        ELSE 0
+                        end) -
+                Sum(CASE
+                        WHEN time_ref BETWEEN 201301 AND 201512
+                                AND account = 'Imports' THEN value
+                        ELSE 0
+                        end) AS deficit
+        FROM    `s2008156-cca1-2.country.gsquarterlySeptember20` AS base
+        JOIN    `s2008156-cca1-2.country.country_codes` as countries
+        ON base.country_code = countries.country_code
+        JOIN (
+        SELECT DISTINCT country_code,
+                                        product_type,
+                                        status
+                        FROM   `s2008156-cca1-2.country.gsquarterlySeptember20`
+                        WHERE  product_type = 'Goods'
+                                AND status = 'F'
+        ) AS extras
+        ON base.country_code = extras.country_code
+        WHERE  base.status = 'F'
+        AND base.product_type = 'Goods'
+        GROUP  BY country, product, status
+        ORDER BY deficit DESC
+    """
     
     job2 = bigQuery_client.query_and_wait(query2) 
 
