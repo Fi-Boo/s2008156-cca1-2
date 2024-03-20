@@ -58,14 +58,14 @@ def index():
     results2_2 = list(job2)
     
     query3 = """
-        SELECT services.service_label AS service,    SUM(CASE
+        SELECT services.service_label AS service,   CAST(SUM(CASE
                                 WHEN account = 'Exports' THEN value
                                 ELSE 0
                                 END) -
                         SUM(CASE
                                 WHEN account = 'Imports' THEN value
                                 ELSE 0
-                                END) AS surplus
+                                END) AS int) AS surplus
 
         FROM `s2008156-cca1-2.country.gsquarterlySeptember20` AS base
         JOIN (
