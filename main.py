@@ -32,22 +32,16 @@ def index():
                         WHEN time_ref BETWEEN 201301 AND 201512
                                 AND account = 'Exports' THEN value
                         ELSE 0
-                        end) AS export_total
+                        end) AS export_total,
+                Sum(CASE
+                        WHEN time_ref BETWEEN 201301 AND 201512
+                                AND account = 'Imports' THEN value
+                        ELSE 0
+                        end) AS import_total
         FROM   `s2008156-cca1-2.country.gsquarterlySeptember20`
         WHERE  status = 'F'
                 AND product_type = 'Goods'
         GROUP  BY country_code) AS export
-        JOIN (SELECT country_code,
-                        Sum(CASE
-                                WHEN time_ref BETWEEN 201301 AND 201512
-                                AND account = 'Imports' THEN value
-                                ELSE 0
-                        end) AS import_total
-                FROM   `s2008156-cca1-2.country.gsquarterlySeptember20`
-                WHERE  status = 'F'
-                        AND product_type = 'Goods'
-                GROUP  BY country_code) AS import
-                ON export.country_code = import.country_code
         JOIN `s2008156-cca1-2.country.country_codes` AS countries
                 ON export.country_code = countries.country_code
         JOIN (SELECT DISTINCT country_code,
