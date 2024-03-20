@@ -66,106 +66,60 @@ def index():
     results2_2 = list(job2)
     
     query3 = """
-        SELECT services.service_label AS service, CAST((export_total-import_total) AS int) AS surplus
-        FROM (
-        SELECT  code, SUM(value) AS export_total
-        FROM (
-        SELECT *
-        FROM    `s2008156-cca1-2.country.gsquarterlySeptember20` AS base
-        JOIN    (
-                SELECT time_ref, CAST(SUM(value) as int) as total
-                FROM    `s2008156-cca1-2.country.gsquarterlySeptember20` 
-                GROUP BY time_ref
-                ORDER BY total DESC
-                LIMIT   10
-        ) AS top10
-        ON base.time_ref = top10.time_ref
-        JOIN    (
-                SELECT import.country_code AS country, (import_total-export_total) AS trade_deficit,
-                FROM    (   
-                        SELECT country_code, SUM(CASE
-                                                        WHEN    time_ref BETWEEN 201301 AND 201512
-                                                        AND     account = 'Exports' THEN value
-                                                        ELSE    0
-                                                END) AS export_total
-                        FROM    `s2008156-cca1-2.country.gsquarterlySeptember20`
-                        WHERE   status = 'F'
-                        AND     product_type = 'Goods'
-                        GROUP BY country_code
-                        ) AS export
-                JOIN    (
-                        SELECT country_code, SUM(CASE
-                                                        WHEN time_ref BETWEEN 201301 AND 201512
-                                                        AND account = 'Imports' THEN value
-                                                        ELSE 0
-                                                END) AS import_total
-                        FROM   `s2008156-cca1-2.country.gsquarterlySeptember20`
-                        WHERE   status = 'F'
-                        AND     product_type = 'Goods'
-                        GROUP BY country_code
-                        ) AS import
-                ON export.country_code = import.country_code
-                ORDER BY trade_deficit DESC
-                LIMIT   40
-        ) AS    top40
-        ON      base.country_code = top40.country
-        )    
-        WHERE   code LIKE 'A%'
-        AND     account = 'Exports'
-        GROUP BY  code, account      
-        ) AS export
+        SELECT services.service_label AS service, 
+        CAST(SUM(  CASE
+        WHEN account = 'Exports'  THEN value
+                                        ELSE 0
+        END) -  SUM(  CASE
+                        WHEN account = 'Imports'  THEN value
+                                                ELSE 0
+                        END) AS int) AS surplus
+        FROM `s2008156-cca1-2.country.gsquarterlySeptember20` AS base
         JOIN (
-        SELECT  code, SUM(value) AS import_total
-        FROM (
-        SELECT *
-        FROM    `s2008156-cca1-2.country.gsquarterlySeptember20` AS base
-        JOIN    (
-                SELECT time_ref, CAST(SUM(value) as int) as total
-                FROM    `s2008156-cca1-2.country.gsquarterlySeptember20` 
+        SELECT time_ref
+                FROM `s2008156-cca1-2.country.gsquarterlySeptember20` 
                 GROUP BY time_ref
-                ORDER BY total DESC
-                LIMIT   10
+                ORDER BY SUM(value) DESC
+                LIMIT 10
         ) AS top10
         ON base.time_ref = top10.time_ref
-        JOIN    (
-                SELECT import.country_code AS country, (import_total-export_total) AS trade_deficit,
-                FROM    (   
-                        SELECT country_code, SUM(CASE
-                                                        WHEN    time_ref BETWEEN 201301 AND 201512
-                                                        AND     account = 'Exports' THEN value
-                                                        ELSE    0
-                                                END) AS export_total
-                        FROM    `s2008156-cca1-2.country.gsquarterlySeptember20`
-                        WHERE   status = 'F'
-                        AND     product_type = 'Goods'
-                        GROUP BY country_code
-                        ) AS export
-                JOIN    (
-                        SELECT country_code, SUM(CASE
-                                                        WHEN time_ref BETWEEN 201301 AND 201512
-                                                        AND account = 'Imports' THEN value
-                                                        ELSE 0
-                                                END) AS import_total
-                        FROM   `s2008156-cca1-2.country.gsquarterlySeptember20`
-                        WHERE   status = 'F'
-                        AND     product_type = 'Goods'
-                        GROUP BY country_code
-                        ) AS import
+
+        JOIN (
+        SELECT export.country_code AS country_code,
+                (import_total-export_total) AS trade_deficit,
+        FROM  (
+                SELECT country_code,
+                SUM (CASE
+                        WHEN time_ref BETWEEN 201301 AND 201512
+                                        AND account = 'Exports' THEN value
+                        ELSE 0
+                END) AS export_total
+                FROM   `s2008156-cca1-2.country.gsquarterlySeptember20`
+                WHERE  status = 'F'
+                AND product_type = 'Goods'
+                GROUP  BY country_code) AS export
+                JOIN  (
+                SELECT country_code,
+                SUM (CASE
+                        WHEN time_ref BETWEEN 201301 AND 201512
+                                        AND account = 'Imports' THEN value
+                                        ELSE 0
+                        END) AS import_total
+                FROM   `s2008156-cca1-2.country.gsquarterlySeptember20`
+                WHERE  status = 'F'
+                AND product_type = 'Goods'
+                GROUP  BY country_code) AS import
                 ON export.country_code = import.country_code
-                ORDER BY trade_deficit DESC
-                LIMIT   40
-        ) AS    top40
-        ON      base.country_code = top40.country
-        )    
-        WHERE   code LIKE 'A%'
-        AND     account = 'Imports'
-        GROUP BY  code, account      
-        ) AS import
-        ON export.code = import.code
+        ORDER  BY trade_deficit DESC
+        LIMIT  40
+        ) AS top40
+        ON base.country_code = top40.country_code
         JOIN `s2008156-cca1-2.country.services_codes` AS services
-        ON export.code = services.service_code
+        ON base.code = services.service_code
+        WHERE code LIKE 'A%'
+        GROUP BY service
         ORDER BY surplus DESC
-        LIMIT 25;
+        LIMIT 25
         """
     job3 = bigQuery_client.query_and_wait(query3) 
     
